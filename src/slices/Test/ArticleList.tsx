@@ -22,6 +22,16 @@ export default function ArticleList({
 }) {
   const [activePlatform, setActivePlatform] = useState<string>("web");
 
+  const filteredArticleTypes = articleTypes.filter((articleType) => {
+    return articles.some(
+      (article) =>
+        isFilled.contentRelationship(article.data.article_type) &&
+        isFilled.contentRelationship(article.data.platform) &&
+        article.data.platform.uid === activePlatform &&
+        article.data.article_type.uid === articleType.uid
+    );
+  });
+
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -44,8 +54,9 @@ export default function ArticleList({
           </button>
         ))}
       </div>
+
       <div style={{ display: "flex", gap: "1rem" }}>
-        {articleTypes.map((articleType) => (
+        {filteredArticleTypes.map((articleType) => (
           <div
             key={articleType.id}
             style={{ border: "2px solid #fff", padding: "1rem" }}
