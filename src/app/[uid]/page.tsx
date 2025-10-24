@@ -15,18 +15,9 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const { uid } = await params;
   const client = createClient();
   const page = await client.getByUID("page", uid).catch(() => notFound());
-  const allArticles = await client.getAllByType("article");
 
-  if (page.uid === "getting-started") {
-    return (
-      <div>
-        <Hero title={page.data.title} description={page.data.description} />
-  
-        <SliceZone slices={page.data.slices} context={{ allArticles }} components={components} />
-      </div>
-    )
-  } else {
-    // <SliceZone> renders the page's slices.
+
+
     return (
       <div>
         <Hero title={page.data.title} description={page.data.description} />
@@ -34,7 +25,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         <SliceZone slices={page.data.slices} components={components} />
       </div>
     )
-  }
+
 }
 
 export async function generateMetadata({

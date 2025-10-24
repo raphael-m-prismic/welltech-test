@@ -30,6 +30,34 @@
           "multi": "paragraph,strong,em"
         }
       },
+      "platform": {
+        "type": "Link",
+        "config": {
+          "label": "Platform",
+          "select": "document",
+          "repeat": false,
+          "customtypes": [
+            {
+              "id": "platforms",
+              "fields": ["title"]
+            }
+          ]
+        }
+      },
+      "article_type": {
+        "type": "Link",
+        "config": {
+          "label": "Article Type",
+          "select": "document",
+          "repeat": false,
+          "customtypes": [
+            {
+              "id": "article_types",
+              "fields": ["title"]
+            }
+          ]
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",

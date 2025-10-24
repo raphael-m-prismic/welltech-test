@@ -98,6 +98,32 @@ interface ArticleDocumentData {
   description: prismic.RichTextField;
 
   /**
+   * Platform field in *Article*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.platform
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  platform: ContentRelationshipFieldWithData<
+    [{ id: "platforms"; fields: ["title"] }]
+  >;
+
+  /**
+   * Article Type field in *Article*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.article_type
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  article_type: ContentRelationshipFieldWithData<
+    [{ id: "article_types"; fields: ["title"] }]
+  >;
+
+  /**
    * Slice Zone field in *Article*
    *
    * - **Field Type**: Slice Zone
@@ -153,6 +179,38 @@ export type ArticleDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<ArticleDocumentData>,
     "article",
+    Lang
+  >;
+
+/**
+ * Content for Article Types documents
+ */
+interface ArticleTypesDocumentData {
+  /**
+   * Title field in *Article Types*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article_types.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+}
+
+/**
+ * Article Types document from Prismic
+ *
+ * - **API ID**: `article_types`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ArticleTypesDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ArticleTypesDocumentData>,
+    "article_types",
     Lang
   >;
 
@@ -348,11 +406,45 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
+/**
+ * Content for Platforms documents
+ */
+interface PlatformsDocumentData {
+  /**
+   * Title field in *Platforms*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: platforms.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+}
+
+/**
+ * Platforms document from Prismic
+ *
+ * - **API ID**: `platforms`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PlatformsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<PlatformsDocumentData>,
+    "platforms",
+    Lang
+  >;
+
 export type AllDocumentTypes =
   | ArticleDocument
+  | ArticleTypesDocument
   | ChildMenuDocument
   | MenuDocument
-  | PageDocument;
+  | PageDocument
+  | PlatformsDocument;
 
 /**
  * Primary content in *RichText → Default → Primary*
@@ -465,6 +557,8 @@ declare module "@prismicio/client" {
       ArticleDocument,
       ArticleDocumentData,
       ArticleDocumentDataSlicesSlice,
+      ArticleTypesDocument,
+      ArticleTypesDocumentData,
       ChildMenuDocument,
       ChildMenuDocumentData,
       ChildMenuDocumentDataArticlesItem,
@@ -474,6 +568,8 @@ declare module "@prismicio/client" {
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
+      PlatformsDocument,
+      PlatformsDocumentData,
       AllDocumentTypes,
       RichTextSlice,
       RichTextSliceDefaultPrimary,
