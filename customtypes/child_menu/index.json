@@ -1,0 +1,40 @@
+{
+  "format": "custom",
+  "id": "child_menu",
+  "label": "Child Menu",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID"
+        }
+      },
+      "articles": {
+        "type": "Group",
+        "config": {
+          "label": "Articles",
+          "repeat": true,
+          "fields": {
+            "article": {
+              "type": "Link",
+              "config": {
+                "label": "Article",
+                "select": "document",
+                "repeat": false,
+                "customtypes": [
+                  {
+                    "id": "article",
+                    "fields": ["title"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

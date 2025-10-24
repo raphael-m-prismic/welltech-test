@@ -1,0 +1,49 @@
+{
+  "format": "custom",
+  "id": "menu",
+  "label": "Menu",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "child_menus": {
+        "type": "Group",
+        "config": {
+          "label": "Child Menus",
+          "repeat": true,
+          "fields": {
+            "child": {
+              "type": "Link",
+              "config": {
+                "label": "Child",
+                "select": "document",
+                "repeat": false,
+                "customtypes": [
+                  {
+                    "id": "child_menu",
+                    "fields": [
+                      {
+                        "id": "articles",
+                        "fields": [
+                          {
+                            "id": "article",
+                            "customtypes": [
+                              {
+                                "id": "article",
+                                "fields": ["title"]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

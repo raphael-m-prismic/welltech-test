@@ -1,0 +1,98 @@
+.platform_tabs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7rem;
+}
+
+.tabs{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    border-radius: 26px;
+    background-color: #28292B;
+}
+.platforms{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.platform_button{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 3px solid #36373A;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+.active{
+    border-color: #1044FF;
+}
+.icon{
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text{
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.title, .type_title{
+    text-transform: uppercase;
+}
+.title::after, .type_title::after{
+    content: "";
+    display: block;
+    width: 50px;
+    height: 4px;
+    margin-top: 16px;
+    background-color: #1044FF;
+}
+
+.articles{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 1rem;
+}
+.articles_section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 3rem;
+}
+.articles_list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+.article{
+    text-decoration: none;
+    color: #FFFFFFD9;
+    transition: all 0.3s ease;
+}
+.article:hover{
+    color: #FFFFFF;
+}
