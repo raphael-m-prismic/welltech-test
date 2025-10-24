@@ -16,15 +16,12 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const page = await client.getByUID("page", uid).catch(() => notFound());
 
-
-
-    return (
-      <div>
-        <Hero title={page.data.title} description={page.data.description} />
-  
-        <SliceZone slices={page.data.slices} components={components} />
-      </div>
-    )
+  return (
+    <div>
+      <Hero title={page.data.title} description={page.data.description} />
+      <SliceZone slices={page.data.slices} components={components} />
+    </div>
+  )
 
 }
 

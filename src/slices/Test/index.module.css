@@ -42,12 +42,9 @@
 .active{
     border-color: #1044FF;
 }
-.icon{
-    width: 44px;
-    height: 44px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.platform_name{
+    text-transform: uppercase;
+    margin: 0;
 }
 .text{
     font-size: 20px;
@@ -83,7 +80,7 @@
 }
 .articles_list{
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 1.5rem;

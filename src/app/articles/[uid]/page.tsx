@@ -5,7 +5,10 @@ import { SliceZone } from "@prismicio/react";
 
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
+
 import Hero from "@/components/Hero";
+import RelatedArticles from "@/components/RelatedArticles";
+import Container from "@/components/Container";
 
 type Params = { uid: string };
 
@@ -14,10 +17,19 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const page = await client.getByUID("article", uid).catch(() => notFound());
   
+  const allArticles = await client.getAllByType("article");
+  const allPlatforms = await client.getAllByType("platforms");
+  const allTypes = await client.getAllByType("article_types");
+
   return (
     <div>
         <Hero title={page.data.title} description={page.data.description}></Hero>
-        <SliceZone slices={page.data.slices} components={components} />
+        <Container>
+          <div>
+            <RelatedArticles page={page} articles={allArticles} platforms={allPlatforms} articleTypes={allTypes}/>
+            <SliceZone slices={page.data.slices} components={components} />
+          </div>
+        </Container>
     </div>
 )
 }
