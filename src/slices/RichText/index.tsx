@@ -29,7 +29,6 @@ type RichTextProps = SliceComponentProps<Content.RichTextSlice>;
  * Component for "RichText" Slices.
  */
 const RichText: FC<RichTextProps> = ({ slice, context }) => {
-  console.log(context)
   return (
     <section >
       <Container>

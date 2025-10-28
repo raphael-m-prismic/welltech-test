@@ -24,8 +24,7 @@
 
 }
 
-.links{
-    /* width: 100%; */
+.links, .ctas{
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,6 +1,5 @@
 "use client";
 
-import { PrismicImage } from "@prismicio/react";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 
 import styles from "./navbar.module.css";
@@ -21,9 +20,11 @@ export default function Navbar({navbar}: NavBarProps) {
                 ))}
             </div>
 
-            {navbar.data.cta.map((link: any) => (
+            <div className={styles.ctas}>
+              {navbar.data.cta.map((link: any) => (
                 <PrismicNextLink key={link.key} field={link} className={styles.cta} />
-            ))}
+              ))}
+            </div>
         </div>
     </div>
   )
