@@ -7,7 +7,7 @@ import { SliceZone } from "@prismicio/react";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 
-import Hero from "@/components/Hero";
+import Hero from "@/components/Hero/Hero";
 
 type Params = { uid: string };
 

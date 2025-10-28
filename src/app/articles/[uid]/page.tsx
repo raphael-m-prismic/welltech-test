@@ -6,9 +6,11 @@ import { SliceZone } from "@prismicio/react";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 
-import Hero from "@/components/Hero";
-import RelatedArticles from "@/components/RelatedArticles";
-import Container from "@/components/Container";
+import Hero from "@/components/Hero/Hero";
+import RelatedArticles from "@/components/RelatedArticles/RelatedArticles";
+
+import styles from "./page.module.css";
+import Container from "@/components/Container/Container";
 
 type Params = { uid: string };
 
@@ -22,12 +24,14 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const allTypes = await client.getAllByType("article_types");
 
   return (
-    <div>
+    <div className={styles.page}>
         <Hero title={page.data.title} description={page.data.description}></Hero>
         <Container>
-          <div>
+          <div className={styles.page_content}>
             <RelatedArticles page={page} articles={allArticles} platforms={allPlatforms} articleTypes={allTypes}/>
-            <SliceZone slices={page.data.slices} components={components} />
+            <div className={styles.article_content}>
+              <SliceZone slices={page.data.slices} context={"article"} components={components} />
+            </div>
           </div>
         </Container>
     </div>

@@ -1,0 +1,14 @@
+.page{
+    background-color: #E9EAED;
+}
+
+.page_content{
+    min-height: 50vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+}
+.article_content{
+    grid-column: span 2;
+    color: #424242;
+}

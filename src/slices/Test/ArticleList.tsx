@@ -10,7 +10,7 @@
     import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 
     import styles from "./index.module.css"
-import Container from "@/components/Container";
+import Container from "@/components/Container/Container";
 
     export default function ArticleList({
     articles,

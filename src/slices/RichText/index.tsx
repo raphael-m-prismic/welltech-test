@@ -6,7 +6,8 @@ import {
   type SliceComponentProps,
   type JSXMapSerializer,
 } from "@prismicio/react";
-import Container from "@/components/Container";
+import Container from "@/components/Container/Container";
+import styles from "./index.module.css";
 
 const components: JSXMapSerializer = {
   hyperlink: ({ node, children }) => {
@@ -27,11 +28,19 @@ type RichTextProps = SliceComponentProps<Content.RichTextSlice>;
 /**
  * Component for "RichText" Slices.
  */
-const RichText: FC<RichTextProps> = ({ slice }) => {
+const RichText: FC<RichTextProps> = ({ slice, context }) => {
+  console.log(context)
   return (
-    <section>
+    <section >
       <Container>
-        <PrismicRichText field={slice.primary.content} components={components} />
+        {/* <div className={context === "article" ? styles.test : ""}> */}
+          <PrismicRichText field={slice.primary.content} components={{
+            ...components,
+            heading1: ({ children }) => <h2 className={context === "article" ? styles.test : ""}>{children}</h2>,
+            heading2: ({ children }) => <h2 className={context === "article" ? styles.test : ""}>{children}</h2>,
+            heading3: ({ children }) => <h2 className={context === "article" ? styles.test : ""}>{children}</h2>,
+            paragraph: ({ children }) => <p className={context === "article" ? styles.test : ""}>{children}</p>
+          }} />
       </Container>
     </section>
   );
