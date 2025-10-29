@@ -2,7 +2,8 @@ import "./globals.css"
 
 import { PrismicPreview } from "@prismicio/next";
 import { repositoryName } from "@/prismicio";
-import Header from "@/components/Header/Header";
+// import Header from "@/components/Header/Header";
+import { Search } from "@/components/Search/Search";
 
 
 export default function RootLayout({
@@ -13,7 +14,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header/>
+        {/* <Header/> */}
+        <Search/>
         {children}
       </body>
       <PrismicPreview repositoryName={repositoryName} />

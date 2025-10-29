@@ -6,6 +6,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 7rem;
+    color: #FFFFFF;
 }
 
 .tabs{
@@ -34,6 +35,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1.5rem;
+    color: #FFFFFF;
     border: 3px solid #36373A;
     border-radius: 14px;
     cursor: pointer;

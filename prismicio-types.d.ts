@@ -507,6 +507,82 @@ export type PlatformsDocument<Lang extends string = string> =
     Lang
   >;
 
+type SearchResultsDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Search Results documents
+ */
+interface SearchResultsDocumentData {
+  /**
+   * Title field in *Search Results*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: search_results.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Slice Zone field in *Search Results*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: search_results.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<SearchResultsDocumentDataSlicesSlice> /**
+   * Meta Title field in *Search Results*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: search_results.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Search Results*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: search_results.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Search Results*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: search_results.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Search Results document from Prismic
+ *
+ * - **API ID**: `search_results`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SearchResultsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<SearchResultsDocumentData>,
+    "search_results",
+    Lang
+  >;
+
 export type AllDocumentTypes =
   | ArticleDocument
   | ArticleTypesDocument
@@ -514,7 +590,8 @@ export type AllDocumentTypes =
   | MenuDocument
   | NavbarDocument
   | PageDocument
-  | PlatformsDocument;
+  | PlatformsDocument
+  | SearchResultsDocument;
 
 /**
  * Primary content in *RichText → Default → Primary*
@@ -642,6 +719,9 @@ declare module "@prismicio/client" {
       PageDocumentDataSlicesSlice,
       PlatformsDocument,
       PlatformsDocumentData,
+      SearchResultsDocument,
+      SearchResultsDocumentData,
+      SearchResultsDocumentDataSlicesSlice,
       AllDocumentTypes,
       RichTextSlice,
       RichTextSliceDefaultPrimary,

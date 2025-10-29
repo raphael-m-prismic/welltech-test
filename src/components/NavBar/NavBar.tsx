@@ -3,9 +3,10 @@
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 
 import styles from "./navbar.module.css";
+import { NavbarDocument } from "../../../prismicio-types";
 
 type NavBarProps = {
-  navbar: any
+  navbar: NavbarDocument
 }
 
 export default function Navbar({navbar}: NavBarProps) { 
@@ -15,13 +16,13 @@ export default function Navbar({navbar}: NavBarProps) {
             <PrismicNextImage field={navbar.data.logo} />
 
             <div className={styles.links}>
-                {navbar.data.link.map((link: any) => (
+                {navbar.data.link.map((link) => (
                     <PrismicNextLink key={link.key} field={link} className={styles.link}/>
                 ))}
             </div>
 
             <div className={styles.ctas}>
-              {navbar.data.cta.map((link: any) => (
+              {navbar.data.cta.map((link) => (
                 <PrismicNextLink key={link.key} field={link} className={styles.cta} />
               ))}
             </div>

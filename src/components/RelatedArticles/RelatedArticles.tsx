@@ -8,7 +8,6 @@ import { asText, isFilled } from '@prismicio/client';
 import Container from "@/components/Container/Container";
 
 import styles from "./related-articles.module.css";
-import { PrismicNextLink } from '@prismicio/next';
 
 
 type RelatedArticlesProps = {
@@ -18,7 +17,7 @@ type RelatedArticlesProps = {
     articleTypes: ArticleTypesDocument[];
 }
 
-export default function RelatedArticles({page, articles, platforms, articleTypes}:RelatedArticlesProps) {
+export default function RelatedArticles({page, articles}:RelatedArticlesProps) {
     return (
     <div>
         <Container>
@@ -28,8 +27,10 @@ export default function RelatedArticles({page, articles, platforms, articleTypes
                     if (
                         !isFilled.contentRelationship(article.data.article_type) ||
                         !isFilled.contentRelationship(article.data.platform) ||
-                        article.data.platform.uid !== page.data.platform.uid ||
-                        article.data.article_type.uid !== page.data.article_type.uid 
+                        !isFilled.contentRelationship(page.data.platform) ||
+                        !isFilled.contentRelationship(page.data.article_type) ||
+                        article.data.platform.id !== page.data.platform.id ||
+                        article.data.article_type.id !== page.data.article_type.id
                         // article.uid === page.uid
                     ) {
                         return null;

@@ -1,4 +1,4 @@
-import { FC, JSX } from "react";
+import { FC } from "react";
 import { Content } from "@prismicio/client";
 import { createClient } from "@/prismicio";
 import { SliceComponentProps } from "@prismicio/react";
@@ -6,7 +6,7 @@ import ArticleList from "./ArticleList";
 
 export type TestProps = SliceComponentProps<Content.TestSlice> & {
   context?: {
-    allArticles?: any[];
+    allArticles?: Content.AllDocumentTypes[];
   };
 };
 
