@@ -66,11 +66,13 @@ And in the Article page type, add two `content relationship` fields linked to pl
 
 ![Screenshot of the article page type in Slice Machine](./public/readme/slice-machine-article.png)
 
-Then you can create a `slice` (I called it Test) that will filter and display every article by platform and article type.
+&nbsp;
 
 ### Server-side data fetching
 
-Create a server side file to get your custom types and all our articles via Prismic API
+Then you can create a `slice` (I called it Test) that will filter and display every article by platform and article type.
+
+Create a server side file in it to get your custom types and all our articles via Prismic API
 
 > `./slices/Test/index.tsx`
 
