@@ -18,10 +18,14 @@ This application is made using [Next.js](https://nextjs.org/) and [Prismic](http
 ### Ressources
 
 - **Demo**: <https://welltech-test.vercel.app/>
+
+- Different pages of the project : 
+[Home](https://welltech-test.vercel.app/) | [Getting Started](https://welltech-test.vercel.app/getting-started) | [Article 1](https://welltech-test.vercel.app/articles/article1) | [Article 2](https://welltech-test.vercel.app/articles/article2) | [Article 3](https://welltech-test.vercel.app/articles/article3) | [Article 4](https://welltech-test.vercel.app/articles/article4)
+
 - **Github repository**: <https://github.com/raphael-m-prismic/welltech-test>
-&nbsp;
 - **Prismic x Algolia**: [How to Add Algolia Instant Search to your Website](https://prismic.io/blog/algolia-instant-search)
 
+&nbsp;
 
 ### Contact
 
@@ -58,15 +62,15 @@ In Slice Machine, create 2 `custom_types` for each category : **Platforms** and 
 
 ![Screenshot of articles categories in Slice Machine](./public/readme/slice-machine-categories.png)
 
-And in the Article page type, add two `content relationship` fields linked to platforms and article types. This is allowing us to easily create a new article type with the article custom type and link it to an article.
+And in the Article page type, add two `content relationship` fields linked to platforms and article types. This is allowing you to easily create a new article type with the article custom type and link it to an article.
 
 ![Screenshot of the article page type in Slice Machine](./public/readme/slice-machine-article.png)
 
-Then we can create a `slice` (here Test) that will filter and display every article by platform and article type.
+Then you can create a `slice` (I called it Test) that will filter and display every article by platform and article type.
 
 ### Server-side data fetching
 
-Create a server side file to get our custom types and all our articles via Prismic API
+Create a server side file to get your custom types and all our articles via Prismic API
 
 > `./slices/Test/index.tsx`
 
@@ -102,8 +106,11 @@ const Test: FC<TestProps> = async ({ slice }) => {
 export default Test;
 
 ```
+&nbsp;
 
 ### Client-side filtering and rendering
+
+And then another file to filter and display the articles.
 
 > `./slices/Test/ArticleList.tsx`
 
@@ -171,7 +178,7 @@ const filteredArticleTypes = articleTypes.filter((articleType) => {
 
 3. **Create** an index
 
-Creating an index in Algolia is a way to tell Algolia where to send and store our data. Navigate to the 'Search' tab and create a new index. We will call our index **'articles'**.
+Creating an index in Algolia is a way to tell Algolia where to send and store our data. Navigate to the 'Search' tab and create a new index. Call your index **'articles'**.
 
 4. **Install** Algolia Packages
 
@@ -180,13 +187,14 @@ npm install algoliasearch@^4.23.3
 ```
 
 > [!NOTE]
-> We are using algoliasearch `v4.23.3` to avoid any breaking API changes.  
+> I used algoliasearch `v4.23.3` to avoid any breaking API changes.  
 > In v5 and later, methods like `initIndex()` or `initSearch()` no longer exist and would have caused runtime errors such as `client.initIndex is not a function`.
 
+&nbsp;
 
 ### Indexing the data to Algolia
 
-Before we index the data, let's inform our application about the Algolia credentials. You can find them in the ['API Keys' section in the Algolia dashboard'](https://dashboard.algolia.com/account/api-keys/). From here, you want to copy your **Application ID,** **Search-Only API Key,** and **Admin API Key**.
+Before you index the data, let's inform your application about the Algolia credentials. You can find them in the ['API Keys' section in the Algolia dashboard'](https://dashboard.algolia.com/account/api-keys/). From here, you want to copy your **Application ID,** **Search-Only API Key,** and **Admin API Key**.
 
 ![Algolia Search API Keys](./public//readme/algolia-api-keys.png)
 
@@ -200,7 +208,7 @@ ALGOLIA_APP_ID= Application ID
 ALGOLIA_ADMIN_API_KEY= Admin API Key
 ```
 
-To index our data on Algolia, we need to send the content from the CMS to Algolia. This data also needs to be processed correctly. A good solution for this is to create an API route in Next.js. Let’s create a new directory in `./app/api/algolia`, and inside, add a file called `route.js`, then add the following code:
+To index your data on Algolia, you need to send the content from the CMS to Algolia. This data also needs to be processed correctly. A good solution for this is to create an API route in Next.js. Let’s create a new directory in `./app/api/algolia`, and inside, add a file called `route.js`, then add the following code:
 
 > `./app/api/algolia/route.js`
 
@@ -282,8 +290,9 @@ export async function POST() {
 }
 
 ```
+&nbsp;
 
-### Testing our API route in Postman
+### Testing the API route in Postman
 
 For testing API requests, I used Postman because of its simplicity and versatility. It lets me construct and send various types of HTTP requests, view responses within the same tool, and automate testing processes.
 
@@ -293,17 +302,19 @@ Once you have Postman installed, fire it up and open a new tab. Change the reque
 
 ![Postman POST request](./public/readme/postman-post.png)
 
-Then click on “Send”, and you should hopefully get the body “Content successfully synchronized with Algolia search” back. And if we then visit our index in the Algolia dashboard and refresh the page, we should see our new data there.
+Then click on “Send”, and you should hopefully get the body “Content successfully synchronized with Algolia search” back. And if you then visit your index in the Algolia dashboard and refresh the page, you should see your new data there.
 
 ![Algolia data indexed](./public/readme/algolia-index-data.png)
 
-### Implementing Search on our Application
+&nbsp;
+
+### Implementing Search on your Application
 
 You can create a <Search /> component.
 
 > `./components/Search/Search.tsx`
 
-**Where we call Algolia and store the results in the state hits**
+**Where you call Algolia and store the results in the state hits**
 
 ```
   const searchAlgolia = async (q: string) => {
@@ -348,17 +359,15 @@ You can create a <Search /> component.
   </div>
 )}
 ```
+&nbsp;
 
 ### Creating a result page
 
 In Prismic create a new single `page type` called **Search Results** where you will redirect the user when they make a query in the search bar.
 
+Then in the search component, listen when the user presses Enter in the search field to redirect them to the results page with the query as a URL parameter.
 
 > `./components/Search/Search.tsx`
-
-**Redirect the user**
-
-In the search bar, listen when the user presses Enter in the search field to redirect them to this results page with the query as a URL parameter.
 
 ```
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -370,7 +379,7 @@ In the search bar, listen when the user presses Enter in the search field to red
 
 ```
 
-
+Finally, create a **Results** component that you will use in your **Search Results** page and where you will display all the corresponding articles to the query.
 
 > `./components/Results/Results.tsx`
 
