@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { asImageSrc, asText } from "@prismicio/client";
+import { asImageSrc } from "@prismicio/client";
 import { Suspense } from "react"; 
 
 import { createClient } from "@/prismicio";
