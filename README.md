@@ -7,11 +7,11 @@ This application is made using [Next.js](https://nextjs.org/) and [Prismic](http
 
 ### Table of content
 
-[Quick Start](#quick-start)
+- [Quick Start](#quick-start)
 
-[Prismic Documentation](#creating-a-documentation-with-prismic)
+- [Prismic Documentation](#creating-a-documentation-with-prismic)
 
-[Algolia Search](#algolia-search-implementation)
+- [Algolia Search](#algolia-search-implementation)
 
 &nbsp;
 
