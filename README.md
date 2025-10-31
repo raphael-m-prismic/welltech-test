@@ -1,117 +1,435 @@
-# Prismic + Next.js Minimal Starter
+# Welltech Customer Help Experimentation
 
-Want to quickly get started building your own project with [Prismic][prismic] and [Next.js][nextjs]? This project includes basic configurations and nothing else. The project includes one Rich Text slice, a homepage, and a dynamic page.
+This project is a test project as part of the integration of the customer support section for [Welltech](https://welltech.com/) applications websites. 
+It explores the creation of a documentation of articles with multiple categories using [Prismic](https://prismic.io/) and a search feature with [Algolia](https://www.algolia.com/). Therefore, this project should not necessarily be used as the final project, but as documentation for the implementation of these features.
 
-- **Demo**: [Open live demo][live-demo]
-- **Learn more about Prismic and Next.js**: [Prismic Next.js Documentation][prismic-docs]
+This application is made using [Next.js](https://nextjs.org/) and [Prismic](https://prismic.io/).
+
+### Table of content
+
+[Quick Start](#quick-start)
+
+[Prismic Documentation](#creating-a-documentation-with-prismic)
+
+[Algolia Search](#algolia-search-implementation)
 
 &nbsp;
 
-![Website screenshot](https://user-images.githubusercontent.com/31219208/228821412-fdde92b2-c13c-4287-b799-611fa96a5fd6.png)
+### Ressources
+
+- **Demo**: <https://welltech-test.vercel.app/>
+- **Github repository**: <https://github.com/raphael-m-prismic/welltech-test>
+&nbsp;
+- **Prismic x Algolia**: [How to Add Algolia Instant Search to your Website](https://prismic.io/blog/algolia-instant-search)
+
+
+### Contact
+
+**Raphaël Mendes**  
+at raphael.mendes@prismic.io  
+
+**Nathanaël Lamellière**  
+at nathanael@prismic.io
 
 &nbsp;
 
-## 🚀 Quick Start
+## Quick Start
 
-To start a new project using this starter:
+How to start this project :
 
-1. Visit <https://prismic.io/dashboard>.
-2. Create a new Prismic repository by selecting **Next.js**.
-3. Select the **Minimal starter**.
-4. Fill out your repository details and continue with the steps given in Prismic.
+1. **Clone** this repository
 
-When you're ready to start your project, run the following command:
-
-```sh
+2. **Install** dependencies
+```
+npm i
+```
+3. **Start** the server
+```
 npm run dev
 ```
 
-## How to use your project
+&nbsp;
 
-To edit the content of this project, go to [prismic.io/dashboard](https://prismic.io/dashboard), click on the repository for this website, and start editing.
+## Creating a documentation with Prismic
 
-### Create a page
+To create a documentation of articles with different categories using Prismic, you can use Prismic's `custom_types`.
 
-To create a page, click on the green pencil icon, then select **Page**.
+In Slice Machine, create 2 `custom_types` for each category : **Platforms** and **Article Types**.
 
-Pages are made of Slices. You can add and rearrange Slices to your pages.
+![Screenshot of articles categories in Slice Machine](./public/readme/slice-machine-categories.png)
 
-Your new page will be accessible by its URL, but it won't appear on the website automatically. To let users discover it, add it to the navigation.
+And in the Article page type, add two `content relationship` fields linked to platforms and article types. This is allowing us to easily create a new article type with the article custom type and link it to an article.
 
-### Preview documents
+![Screenshot of the article page type in Slice Machine](./public/readme/slice-machine-article.png)
 
-If you chose this starter when you created a new repository from the Prismic Dashboard, then your repository is preconfigured with previews on localhost. To change the preview configuration or add previews to your production or staging environments, see [Preview Drafts in Next.js](https://prismic.io/docs/technologies/preview-content-nextjs) in the Prismic documentation.
+Then we can create a `slice` (here Test) that will filter and display every article by platform and article type.
 
-### Customize this website
+### Server-side data fetching
 
-This website is preconfigured with Prismic. It has three Prismic packages installed:
+Create a server side file to get our custom types and all our articles via Prismic API
 
-- `@prismicio/client` provides helpers for fetching content from Prismic
-- `@prismicio/react` provides React components for rendering content from Prismic
-- `@prismicio/next` provides a wrapper component to configure Prismic previews
-
-These packages are already integrated and employed in this app. Take a look at the code to see how they're used.
-
-### Edit the code
-
-There are two steps to rendering content from Prismic in your Next.js project:
-
-1. Fetch content from the Prismic API using `@prismicio/client`.
-2. Template the content using components from `@prismicio/react`.
-
-Here are some of the files in your project that you can edit:
-
-- `prismicio.ts` - This file includes configuration for `@prismicio/client` and exports useful API helpers.
-- `app/layout.tsx` - This is your layout component, which includes configuration for `@prismicio/react` and `@prismicio/next`.
-- `app/page.tsx` - This is the app homepage. It queries and renders a page document with the UID (unique identifier) "home" from the Prismic API.
-- `app/[uid]/page.tsx` - This is the page component, which queries and renders a page document from your Prismic repository based on the UID.
-- `slices/*/index.tsx` - Each Slice in your project has an index.tsx file that renders the Slice component. Edit this file to customize your Slices.
-
-These are important files that you should leave as-is:
-
-- `app/api/exit-preview/route.ts` - Do not edit or delete this file. This is the API endpoint to close a Prismic preview session.
-- `app/api/preview/route.ts` - Do not edit or delete this file. This is the API endpoint to launch a Prismic preview session.
-- `app/slice-simulator/page.tsx` - Do not edit or delete this file. This file simulates your Slice components in development.
-- `slices/` - This directory contains Slice components, which are generated programmatically by Slice Machine. To customize a Slice template, you can edit the Slice's index.tsx file. To add Slices, delete Slices, or edit Slice models, use Slice Machine (more info below).
-
-Learn more about how to edit your components with [Fetch Data in Next.js](https://prismic.io/docs/technologies/fetch-data-nextjs) and [Template Content in Next.js](https://prismic.io/docs/technologies/template-content-nextjs).
-
-Learn more about how to use [TypeScript with Prismic](https://prismic.io/docs/typescript-nextjs).
-
-### Deploy to the web
-
-To put your project online, see [Deploy your Next.js App](https://prismic.io/docs/technologies/deploy-nextjs).
-
-### Edit content models with Slice Machine
-
-This project includes an application called Slice Machine, which generates models for your Custom Types and Slices. Slice Machine stores the models locally in your codebase, so you can save and version them. It also syncs your models to Prismic. To learn how to use Slice Machine, read [Model Content in Next.js](https://prismic.io/docs/technologies/model-content-nextjs).
-
-If you change or add to your Custom Types, you'll need to update your route handling to match. To learn how to do that, read [Define Paths in Next.js](https://prismic.io/docs/technologies/define-paths-nextjs).
-
-## Documentation
-
-For the official Prismic documentation, see [Prismic's guide for Next.js][prismic-docs] or the [technical references for the installed Prismic packages](https://prismic.io/docs/technologies/technical-references).
-
-## License
+> `./slices/Test/index.tsx`
 
 ```
-Copyright 2013-2022 Prismic <contact@prismic.io> (https://prismic.io)
+import { FC } from "react";
+import { Content } from "@prismicio/client";
+import { createClient } from "@/prismicio";
+import { SliceComponentProps } from "@prismicio/react";
+import ArticleList from "./ArticleList";
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+export type TestProps = SliceComponentProps<Content.TestSlice> & {
+  context?: {
+    allArticles?: Content.AllDocumentTypes[];
+  };
+};
 
-    http://www.apache.org/licenses/LICENSE-2.0
+const Test: FC<TestProps> = async ({ slice }) => {
+  const client = createClient();
+  const allArticles = await client.getAllByType("article");
+  const allPlatforms = await client.getAllByType("platforms");
+  const allTypes = await client.getAllByType("article_types");
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  return (
+    <ArticleList
+      articles={allArticles}
+      platforms={allPlatforms}
+      articleTypes={allTypes}
+      slice={slice}
+    />
+  );
+};
+
+export default Test;
+
 ```
 
-[prismic]: https://prismic.io/
-[prismic-docs]: https://prismic.io/docs/technologies/nextjs
-[prismic-sign-up]: https://prismic.io/dashboard/signup
-[nextjs]: https://nextjs.org/
-[live-demo]: https://nextjs-starter-prismic-minimal.vercel.app/
+### Client-side filtering and rendering
+
+> `./slices/Test/ArticleList.tsx`
+
+**Filtering logic**
+
+```
+const [activePlatform, setActivePlatform] = useState<string>("web");
+
+const filteredArticleTypes = articleTypes.filter((articleType) => {
+    
+    return articles.some(
+    (article) =>
+        isFilled.contentRelationship(article.data.article_type) &&
+        isFilled.contentRelationship(article.data.platform) &&
+        article.data.platform.uid === activePlatform &&
+        article.data.article_type.uid === articleType.uid
+    );
+});
+```
+
+**Rendering filtered articles**
+
+```
+{filteredArticleTypes.map((articleType) => (
+    <div
+        key={articleType.id}
+        className={styles.articles_section}
+    >
+        <h2 className={styles.type_title}>{asText(articleType.data.title)}</h2>
+
+        <div className={styles.articles_list}>
+        {articles.map((article) => {
+            if (
+            !isFilled.contentRelationship(article.data.article_type) ||
+            !isFilled.contentRelationship(article.data.platform) ||
+            article.data.platform.uid !== activePlatform ||
+            article.data.article_type.uid !== articleType.uid
+            ) {
+            return null;
+            }
+
+            return (
+            <div key={article.id}>
+                <PrismicNextLink href={`/articles/${article.uid}`} className={styles.article}>
+                    {asText(article.data.title)}
+                </PrismicNextLink>
+            </div>
+            );
+        })}
+        </div>
+    </div>
+))}
+```
+
+&nbsp;
+
+## Algolia Search Implementation
+
+
+### Set up Algolia
+
+1. **Go** to [Algolia.com](https://www.algolia.com/)
+
+2. **Create** an Algolia account
+
+3. **Create** an index
+
+Creating an index in Algolia is a way to tell Algolia where to send and store our data. Navigate to the 'Search' tab and create a new index. We will call our index **'articles'**.
+
+4. **Install** Algolia Packages
+
+```
+npm install algoliasearch@^4.23.3
+```
+
+> [!NOTE]
+> We are using algoliasearch `v4.23.3` to avoid any breaking API changes.  
+> In v5 and later, methods like `initIndex()` or `initSearch()` no longer exist and would have caused runtime errors such as `client.initIndex is not a function`.
+
+
+### Indexing the data to Algolia
+
+Before we index the data, let's inform our application about the Algolia credentials. You can find them in the ['API Keys' section in the Algolia dashboard'](https://dashboard.algolia.com/account/api-keys/). From here, you want to copy your **Application ID,** **Search-Only API Key,** and **Admin API Key**.
+
+![Algolia Search API Keys](./public//readme/algolia-api-keys.png)
+
+Then, at the root of your project, create a **.env** file. In this file, include the credentials as follows:
+
+```
+NEXT_PUBLIC_ALGOLIA_APP_ID= Application ID
+NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY= Search API Key
+
+ALGOLIA_APP_ID= Application ID
+ALGOLIA_ADMIN_API_KEY= Admin API Key
+```
+
+To index our data on Algolia, we need to send the content from the CMS to Algolia. This data also needs to be processed correctly. A good solution for this is to create an API route in Next.js. Let’s create a new directory in `./app/api/algolia`, and inside, add a file called `route.js`, then add the following code:
+
+> `./app/api/algolia/route.js`
+
+```
+import algoliasearch from "algoliasearch";
+import { createClient } from "@/prismicio";
+import { asText } from "@prismicio/client";
+
+// Transform Prismic slices to indexable text for Algolia
+const transformSlices = (slices) => {
+  const textStrings = slices.map((slice) => {
+    if (!slice) return "";
+    switch (slice.slice_type) {
+      case "text":
+        return asText(slice.primary.text);
+      case "image":
+        return asText(slice.primary.caption);
+      case "quote":
+        return `${asText(slice.primary.quote)} ${slice.primary.source || ""}`;
+      default:
+        return "";
+    }
+  });
+
+  return textStrings.join(" ");
+};
+
+export async function POST() {
+  // Check environment variables exist
+  if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_ADMIN_API_KEY) {
+    return new Response("Algolia credentials are not set", { status: 500 });
+  }
+
+  try {
+    console.log("1️⃣ Start POST");
+
+    // Init Prismic et Algolia clients
+    const prismicClient = createClient();
+    const algoliaClient = algoliasearch(
+      process.env.ALGOLIA_APP_ID,
+      process.env.ALGOLIA_ADMIN_API_KEY
+    );
+    console.log("2️⃣ Algolia Client created");
+
+    // Get 'articles' index or create it
+    const index = algoliaClient.initIndex("articles");
+    console.log("3️⃣ Index retrieved");
+
+    // Retrieve all articles from Prismic
+    const articles = await prismicClient.getAllByType("article");
+    console.log(`4️⃣ ${articles.length} articles retrieved from Prismic`);
+
+    // Transform articles into objects in Algolia
+    const articleRecords = articles.map((post) => ({
+      objectID: post.id,
+      title: asText(post.data.title),
+      slug: post.uid,
+      description: post.data.description[0].text,
+      text: transformSlices(post.data.slices),
+    }));
+
+    console.log("5️⃣ Articles transformed for Algolia");
+
+    // Send objects to the index in Algolia
+    await index.saveObjects(articleRecords);
+    console.log("6️⃣ Articles sent to Algolia");
+
+    return new Response(
+      "Content successfully synchronized with Algolia search",
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("❌ Algolia sync error:", error);
+    return new Response(
+      "An error occurred while synchronizing content",
+      { status: 500 }
+    );
+  }
+}
+
+```
+
+### Testing our API route in Postman
+
+For testing API requests, I used Postman because of its simplicity and versatility. It lets me construct and send various types of HTTP requests, view responses within the same tool, and automate testing processes.
+
+Getting started with Postman is really easy. Just download their desktop app [here](https://www.postman.com/downloads/).
+
+Once you have Postman installed, fire it up and open a new tab. Change the request type from `GET` to `POST` and fill the `http://localhost:3000/api/algolia` to the URL field next to it.
+
+![Postman POST request](./public/readme/postman-post.png)
+
+Then click on “Send”, and you should hopefully get the body “Content successfully synchronized with Algolia search” back. And if we then visit our index in the Algolia dashboard and refresh the page, we should see our new data there.
+
+![Algolia data indexed](./public/readme/algolia-index-data.png)
+
+### Implementing Search on our Application
+
+You can create a <Search /> component.
+
+> `./components/Search/Search.tsx`
+
+**Where we call Algolia and store the results in the state hits**
+
+```
+  const searchAlgolia = async (q: string) => {
+    if (!q) {
+      setHits([]);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://${process.env.NEXT_PUBLIC_ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/articles/query`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Algolia-API-Key": process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY!,
+            "X-Algolia-Application-Id": process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
+          },
+          body: JSON.stringify({ query: q }),
+        }
+      );
+
+      const data = await res.json();
+      setHits(data.hits);
+    } catch (err) {
+      console.error("Algolia search error:", err);
+    } 
+  };
+```
+
+**And render the hits as clickable links**
+
+```
+{hits.length > 0 && (
+  <div className={styles.hits}>
+    {hits.map((hit) => (
+      <a key={hit.objectID} href={`/articles/${hit.slug}`} className={styles.hit}>
+        <span className={styles.title}>{hit.title}</span>
+        <span className={styles.desc}>{hit.description}</span>
+      </a>
+    ))}
+  </div>
+)}
+```
+
+### Creating a result page
+
+In Prismic create a new single `page type` called **Search Results** where you will redirect the user when they make a query in the search bar.
+
+
+> `./components/Search/Search.tsx`
+
+**Redirect the user**
+
+In the search bar, listen when the user presses Enter in the search field to redirect them to this results page with the query as a URL parameter.
+
+```
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && query.trim()) {
+      e.preventDefault();
+      router.push(`/search_results/?query=${encodeURIComponent(query)}`);
+    }
+  };
+
+```
+
+
+
+> `./components/Results/Results.tsx`
+
+**Retrieving the query from the URL**
+
+```
+const searchParams = useSearchParams();
+const query = searchParams.get("query") || "";
+```
+
+**Data retrieval (fetch Algolia)**
+
+```
+useEffect(() => {
+  if (!query) return;
+
+  const fetchResults = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://${process.env.NEXT_PUBLIC_ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/articles/query`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Algolia-API-Key": process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY!,
+            "X-Algolia-Application-Id": process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
+          },
+          body: JSON.stringify({ query }),
+        }
+      );
+      const data = await res.json();
+      setHits(data.hits);
+    } catch (err) {
+      console.error("Algolia search error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchResults();
+}, [query]);
+
+```
+
+**Displaying results**
+
+```
+{query && (
+  <div className={styles.results} >
+    {loading && <p>Loading...</p>}
+    {!loading && hits.length === 0 && <p>No results found.</p>}
+      {hits.map((hit) => (
+        <a key={hit.objectID} href={`/articles/${hit.slug}`} className={styles.hit}>
+          <span className={styles.title}>{hit.title}</span>
+          <span className={styles.desc}>{hit.description}</span>
+        </a>
+      ))}
+  </div>
+)}
+
+```

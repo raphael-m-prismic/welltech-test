@@ -28,7 +28,7 @@ export async function POST() {
   }
 
   try {
-    console.log("1️⃣ Début POST");
+    console.log("1️⃣ Start POST");
 
     // Init Prismic et Algolia clients
     const prismicClient = createClient();
@@ -36,15 +36,15 @@ export async function POST() {
       process.env.ALGOLIA_APP_ID,
       process.env.ALGOLIA_ADMIN_API_KEY
     );
-    console.log("2️⃣ Client Algolia créé");
+    console.log("2️⃣ Algolia Client created");
 
     // Get 'articles' index or create it
     const index = algoliaClient.initIndex("articles");
-    console.log("3️⃣ Index récupéré");
+    console.log("3️⃣ Index retrieved");
 
     // Retrieve all articles from Prismic
     const articles = await prismicClient.getAllByType("article");
-    console.log(`4️⃣ ${articles.length} articles récupérés depuis Prismic`);
+    console.log(`4️⃣ ${articles.length} articles retrieved from Prismic`);
 
     // Transform articles into objects in Algolia
     const articleRecords = articles.map((post) => ({
@@ -55,11 +55,11 @@ export async function POST() {
       text: transformSlices(post.data.slices),
     }));
 
-    console.log("5️⃣ Articles transformés pour Algolia");
+    console.log("5️⃣ Articles transformed for Algolia");
 
     // Send objects to the index in Algolia
     await index.saveObjects(articleRecords);
-    console.log("6️⃣ Articles envoyés à Algolia");
+    console.log("6️⃣ Articles sent to Algolia");
 
     return new Response(
       "Content successfully synchronized with Algolia search",

@@ -26,7 +26,7 @@
         const [activePlatform, setActivePlatform] = useState<string>("web");
 
         const filteredArticleTypes = articleTypes.filter((articleType) => {
-            // .filter creates a shallow copy of a portion of articlesTypes array, filtered down to just the elements from the given array that pass the test implemented by the provided function: here, we test if there are articles are associated with each article type
+            
             return articles.some(
             (article) =>
                 isFilled.contentRelationship(article.data.article_type) &&

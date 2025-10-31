@@ -215,115 +215,6 @@ export type ArticleTypesDocument<Lang extends string = string> =
   >;
 
 /**
- * Item in *Child Menu → Articles*
- */
-export interface ChildMenuDocumentDataArticlesItem {
-  /**
-   * Article field in *Child Menu → Articles*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: child_menu.articles[].article
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  article: ContentRelationshipFieldWithData<
-    [{ id: "article"; fields: ["title"] }]
-  >;
-}
-
-/**
- * Content for Child Menu documents
- */
-interface ChildMenuDocumentData {
-  /**
-   * Articles field in *Child Menu*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: child_menu.articles[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  articles: prismic.GroupField<Simplify<ChildMenuDocumentDataArticlesItem>>;
-}
-
-/**
- * Child Menu document from Prismic
- *
- * - **API ID**: `child_menu`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type ChildMenuDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<ChildMenuDocumentData>,
-    "child_menu",
-    Lang
-  >;
-
-/**
- * Item in *Menu → Child Menus*
- */
-export interface MenuDocumentDataChildMenusItem {
-  /**
-   * Child field in *Menu → Child Menus*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: menu.child_menus[].child
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  child: ContentRelationshipFieldWithData<
-    [
-      {
-        id: "child_menu";
-        fields: [
-          {
-            id: "articles";
-            fields: [
-              {
-                id: "article";
-                customtypes: [{ id: "article"; fields: ["title"] }];
-              },
-            ];
-          },
-        ];
-      },
-    ]
-  >;
-}
-
-/**
- * Content for Menu documents
- */
-interface MenuDocumentData {
-  /**
-   * Child Menus field in *Menu*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: menu.child_menus[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  child_menus: prismic.GroupField<Simplify<MenuDocumentDataChildMenusItem>>;
-}
-
-/**
- * Menu document from Prismic
- *
- * - **API ID**: `menu`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type MenuDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
-
-/**
  * Content for Navbar documents
  */
 interface NavbarDocumentData {
@@ -586,8 +477,6 @@ export type SearchResultsDocument<Lang extends string = string> =
 export type AllDocumentTypes =
   | ArticleDocument
   | ArticleTypesDocument
-  | ChildMenuDocument
-  | MenuDocument
   | NavbarDocument
   | PageDocument
   | PlatformsDocument
@@ -706,12 +595,6 @@ declare module "@prismicio/client" {
       ArticleDocumentDataSlicesSlice,
       ArticleTypesDocument,
       ArticleTypesDocumentData,
-      ChildMenuDocument,
-      ChildMenuDocumentData,
-      ChildMenuDocumentDataArticlesItem,
-      MenuDocument,
-      MenuDocumentData,
-      MenuDocumentDataChildMenusItem,
       NavbarDocument,
       NavbarDocumentData,
       PageDocument,
