@@ -3,18 +3,19 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import styles from "./search.module.css"
+
 type ArticleHit = {
   objectID: string;
   title: string;
   slug: string;
-  image?: { url: string; alt?: string };
+  description: string,
   text: string;
 };
 
 export function Search() {
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<ArticleHit[]>([]);
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const searchAlgolia = async (q: string) => {
@@ -23,7 +24,6 @@ export function Search() {
       return;
     }
 
-    setLoading(true);
     try {
       const res = await fetch(
         `https://${process.env.NEXT_PUBLIC_ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/articles/query`,
@@ -42,9 +42,7 @@ export function Search() {
       setHits(data.hits);
     } catch (err) {
       console.error("Algolia search error:", err);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -55,35 +53,31 @@ export function Search() {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto relative">
-      <input
-        type="search"
-        className="w-full border rounded-full px-4 py-2 mb-2"
-        placeholder="Search articles..."
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          searchAlgolia(e.target.value);
-        }}
-        onKeyDown={handleKeyDown}
-      />
+    <div className={styles.navbar_container}>
+      <div className={styles.search_bar}>
+        <input
+          className={styles.input}
+          type="search"
+          placeholder="Search articles..."
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            searchAlgolia(e.target.value);
+          }}
+          onKeyDown={handleKeyDown}
+        />
 
-      {loading && <div className="p-2">Loading...</div>}
-
-      {hits.length > 0 && (
-        <ul className="absolute z-50 w-full bg-white border rounded-lg shadow-lg">
-          {hits.map((hit) => (
-            <li key={hit.objectID} className="p-2 border-b last:border-b-0">
-              <a href={`/articles/${hit.slug}`} className="flex items-center gap-2 text-blue-600">
-                {hit.image?.url && (
-                  <img src={hit.image.url} alt={hit.image.alt || ""} className="w-16 h-10 object-cover rounded" />
-                )}
-                <span>{hit.title}</span>
+        {hits.length > 0 && (
+          <div className={styles.hits}>
+            {hits.map((hit) => (
+              <a key={hit.objectID} href={`/articles/${hit.slug}`} className={styles.hit}>
+                <span className={styles.title}>{hit.title}</span>
+                <span className={styles.desc}>{hit.description}</span>
               </a>
-            </li>
-          ))}
-        </ul>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

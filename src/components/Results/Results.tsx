@@ -2,20 +2,19 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Container from "../Container/Container";
+
+import styles from "./results.module.css"
 
 type ArticleHit = {
   objectID: string;
   title: string;
   slug: string;
-  image?: { url: string; alt?: string };
+  description: string,
   text: string;
 };
 
-interface ResultsProps {
-  title?: string;
-}
-
-export default function Results({ title }: ResultsProps) {
+export default function Results() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
   console.log(query)
@@ -55,36 +54,20 @@ export default function Results({ title }: ResultsProps) {
   }, [query]);
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      {/* Hero */}
-      {title && <h1 className="text-3xl font-bold mb-6">{title}</h1>}
-
-      {/* Résultats Algolia */}
-      {query && (
-        <div className="mt-6">
-          {loading && <p>Loading...</p>}
-          {!loading && hits.length === 0 && <p>No results found.</p>}
-          <ul className="space-y-4">
-            {hits.map((hit) => (
-              <li key={hit.objectID} className="border p-4 rounded-lg flex gap-4">
-                {hit.image?.url && (
-                  <img
-                    src={hit.image.url}
-                    alt={hit.image.alt || ""}
-                    className="w-24 h-16 object-cover rounded"
-                  />
-                )}
-                <div>
-                  <a href={`/articles/${hit.slug}`} className="text-blue-600 font-semibold">
-                    {hit.title}
-                  </a>
-                  <p className="text-gray-600">{hit.text.slice(0, 150)}...</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+    <Container>
+        {/* Résultats Algolia */}
+        {query && (
+          <div className={styles.results} >
+            {loading && <p>Loading...</p>}
+            {!loading && hits.length === 0 && <p>No results found.</p>}
+              {hits.map((hit) => (
+                <a key={hit.objectID} href={`/articles/${hit.slug}`} className={styles.hit}>
+                  <span className={styles.title}>{hit.title}</span>
+                  <span className={styles.desc}>{hit.description}</span>
+                </a>
+              ))}
+          </div>
+        )}
+    </Container>
   );
 }

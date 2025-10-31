@@ -4,23 +4,23 @@ import { asImageSrc, asText } from "@prismicio/client";
 import { Suspense } from "react"; 
 
 import { createClient } from "@/prismicio";
-// import { components } from "@/slices";
-import Results from "@/components/Results/Results";
 import { SliceZone } from "@prismicio/react";
 
+import Results from "@/components/Results/Results";
+import Hero from "@/components/Hero/Hero";
 
 export default async function Page() {
   const client = createClient();
   const page = await client.getSingle("search_results").catch(() => notFound());
 
-  // ici tu peux passer toutes les données que tu veux
   const title = page.data.title;
   const slices = page.data.slices;
 
   return (
     <div>
+        <Hero title={title} description={null}/>
          <Suspense fallback={<div>Loading search results...</div>}>
-            <Results title={asText(title)}/>
+            <Results/>
         </Suspense>
         <SliceZone slices={slices} />
     </div>

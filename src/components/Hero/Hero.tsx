@@ -1,14 +1,17 @@
+"use client";
+
 import React from 'react'
 import { RichTextField } from '@prismicio/client'
 import { PrismicRichText } from '@prismicio/react'
 
 import Container from '../Container/Container'
+import { Search } from "@/components/Search/Search";
 
 import styles from "./hero.module.css";
 
 type HeroProps = {
   title: RichTextField,
-  description: RichTextField
+  description: RichTextField | null
 }
 
 export default function Hero({title, description}:HeroProps) {
@@ -25,6 +28,7 @@ export default function Hero({title, description}:HeroProps) {
               <p className={styles.description}>{children}</p>
             )
           }}/>
+          <Search />
         </Container>
       </div>
   )
